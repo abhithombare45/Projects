@@ -34,11 +34,12 @@ data_path = (
     "/Users/abhijeetthombare/ab_lib/Projects/fitness_tracker/data/raw/MetaMotion/"
 )
 
-f = files[0]
 
 # Finding Participant from the data
 # f.split("-")
 # f.split("-")[0]
+
+f = files[0] # take single element from array to work on whole dataframe elements.
 
 participant = f.split("-")[0].replace(data_path, "")
 label = f.split("-")[1]
@@ -183,6 +184,13 @@ data_merged.columns = [
 # data_merged[:100].resample(rule="S") this is nothing but a function to resample the data
 # this will take mean of all the values in the data and resample it to 1 second
 data_merged[:100].resample(rule="S") 
+
+# If there are non-numeric columns in data_merge, exclude them before resampling:
+# numeric_data = data_merged.select_dtypes(include=['number'])
+# resampled_data = numeric_data[:1000].resample(rule="200ms").apply(sampling)
+# print(resampled_data)
+# print()
+
 data_merged[:100].resample(rule="S").mean()
 
 sampling = {
@@ -209,6 +217,7 @@ data_merged[:1000].resample(rule="200ms").apply(sampling)
 # split by day
 days = [g for n, g in data_merged.groupby(pd.Grouper(freq="D"))]
 
+
 days[0] # first day
 days[1] # second day
 days[-1] # last day
@@ -218,15 +227,15 @@ days[-1] # last day
 #--------------------------------------------------------------
 
 data_resampled = pd.concat([df.resample(rule="200ms").apply(sampling).dropna() for df in days])
+data_resampled["set"] = data_resampled["set"].astype("int")
 
+data_resampled.info()
 
-# If there are non-numeric columns in data_merge, exclude them before resampling:
-# numeric_data = data_merged.select_dtypes(include=['number'])
-# resampled_data = numeric_data[:1000].resample(rule="200ms").apply(sampling)
-# print(resampled_data)
-# print()
 
 
 # --------------------------------------------------------------
 # Export dataset
 # --------------------------------------------------------------
+
+
+data_resampled.to_pickle("/Users/abhijeetthombare/ab_lib/Projects/fitness_tracker/data/interim/01_data_processed.pkl")
