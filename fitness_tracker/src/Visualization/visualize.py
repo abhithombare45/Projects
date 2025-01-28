@@ -143,6 +143,7 @@ for label in df["label"].unique():
 
 label = "row"
 participant = "A"
+
 combained_plot_df = (
     df.query(f"label == '{label}'")
     .query(f"participant == '{participant}'")
@@ -202,12 +203,8 @@ for label in labels:
                 shadow=True,
             )
             ax[1].set_xlabel("Sample Veriation")
-            ax[1].set_xlabel("Sample Veriation").legend(
-                loc="upper right",
-                bbox_to_anchor=(1, 1),
-                ncol=1,
-                fancybox=True,
-                shadow=True,
+
+            plt.savefig(
+                f"/Users/abhijeetthombare/ab_lib/Projects/fitness_tracker/reports/figures/{label.title()}_{participant}.png"
             )
-            plt.legend()
             plt.show()
