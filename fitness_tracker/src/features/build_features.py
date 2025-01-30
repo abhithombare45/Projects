@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from DataTransformation import LowPassFilter, PrincipalComponentAnalysis
+from DataTransformation import PrincipalComponentAnalysis
 from TemporalAbstraction import NumericalAbstraction
 
 
@@ -9,6 +9,9 @@ from TemporalAbstraction import NumericalAbstraction
 # Load data
 # --------------------------------------------------------------
 
+df = pd.read_pickle(
+    "/Users/abhijeetthombare/ab_lib/Projects/fitness_tracker/data/interim/02_data_outliers_removed_chauvenets.pkl"
+)
 
 # --------------------------------------------------------------
 # Dealing with missing values (imputation)

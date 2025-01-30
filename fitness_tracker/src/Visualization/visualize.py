@@ -32,6 +32,7 @@ for label in df["label"].unique():
     )  # we working with all datapoints on acc_x
     plt.legend()
     plt.show()
+    plt.close()
 
 for label in df["label"].unique():
     subset = df[df["label"] == label]
@@ -42,6 +43,7 @@ for label in df["label"].unique():
     )  # we added first 100 itteration of acc_x
     plt.legend()
     plt.show()
+    plt.close()
 
 # --------------------------------------------------------------
 # Adjust plot settings
@@ -49,7 +51,7 @@ for label in df["label"].unique():
 
 mpl.style.use("seaborn-v0_8-deep")
 mpl.rcParams["figure.figsize"] = [20, 5]
-mpl.rcParams["figure.dpi"] = 100
+mpl.rcParams["figure.dpi"] = 100  # High Resolution for the plot
 
 # --------------------------------------------------------------
 # Compare medium vs. heavy sets
@@ -119,6 +121,7 @@ for label in df["label"].unique():
             plt.title(f"Label: {label} - Participant: {participant}")
             plt.legend()
             plt.show()
+            plt.close()
 
 for label in df["label"].unique():
     for participant in df["participant"].unique():
@@ -135,6 +138,7 @@ for label in df["label"].unique():
             plt.title(f"Label: {label} - Participant: {participant}")
             plt.legend()
             plt.show()
+            plt.close()
 
 
 # --------------------------------------------------------------
@@ -161,19 +165,17 @@ ax[1].legend(
     loc="upper right", bbox_to_anchor=(0.5, 1.15), ncol=3, fancybox=True, shadow=True
 )
 ax[1].set_xlabel("Sample Veriation")
-ax[1].set_xlabel("Sample Veriation").legend(
-    loc="upper right", bbox_to_anchor=(1, 1), ncol=1, fancybox=True, shadow=True
-)
+
 plt.legend()
 plt.show()
-
+plt.close()
 
 # --------------------------------------------------------------
 # Loop over all combinations and export for both sensors
 # --------------------------------------------------------------
 
-labels = df["label"]
-participants = df["participant"]
+labels = df["label"].unique()
+participants = df["participant"].unique()
 
 
 for label in labels:
@@ -204,7 +206,6 @@ for label in labels:
             )
             ax[1].set_xlabel("Sample Veriation")
 
-            plt.savefig(
-                f"/Users/abhijeetthombare/ab_lib/Projects/fitness_tracker/reports/figures/{label.title()}_{participant}.png"
-            )
+            plt.savefig(f"../../reports/figures/{label.title()}_{participant}.png")
+            plt.close()
             plt.show()
