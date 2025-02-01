@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from DataTransformation import LowPassFilter, PrincipalComponentAnalysis
 from TemporalAbstraction import NumericalAbstraction
-
+from FrequencyAbstraction import FourierTransformation
 
 # --------------------------------------------------------------
 # Load data
@@ -139,6 +139,7 @@ for col in predictor_column:
 
 
 df_temporal_list = []
+
 for s in df_temporal["set"].unique():
     subset = df_temporal[df_temporal["set"] == s].copy()
     for col in predictor_column:
@@ -157,6 +158,28 @@ subset[["gyr_y", "gyr_y_temp_mean_ws_5", "gyr_y_temp_std_ws_5"]].plot()
 # --------------------------------------------------------------
 # Frequency features
 # --------------------------------------------------------------
+
+df_freq = df_temporal.copy().reset_index()
+FreqAbs = FourierTransformation()
+
+fs = int(1000 / 200)
+ws = int(2800 / 200)
+
+df_freq = FreqAbs.abstract_frequency(df_freq, ["acc_y"], ws, fs)
+
+
+# Visualize result
+subset = df_freq[df_freq["set"] == 15]
+subset[["acc_y"]].plot()
+subset[
+    [
+        "acc_y_max_freq",
+        "acc_y_freq_weighted",
+        "acc_y_pse",
+        "acc_y_freq_1.429_Hz_ws_14",
+        "acc_y_freq_2.5_Hz_ws_14",
+    ]
+]
 
 
 # --------------------------------------------------------------
