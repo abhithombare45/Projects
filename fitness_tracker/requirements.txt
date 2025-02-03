@@ -1,2 +1,5 @@
 ipykernel
 python-dotenv
+pandas
+scikit-learn
+numpy

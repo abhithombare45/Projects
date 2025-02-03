@@ -6,8 +6,11 @@ import seaborn as sns
 import itertools
 from sklearn.metrics import accuracy_score, confusion_matrix
 
-from LearningAlgorithms import ClassificationAlgorithms
+# import LearningAlgorithms as LA
+import sys
 
+sys.path.append("/Users/abhijeetthombare/ab_lib/Projects/fitness_tracker/src/modeling/")
+from LearningAlgorithms import ClassificationAlgorithms
 
 # Plot settings
 plt.style.use("fivethirtyeight")
@@ -67,7 +70,60 @@ feature_set_4 = list(set(feature_set_3 + freq_features + cluster_features))
 # Perform forward feature selection using simple decision tree
 # --------------------------------------------------------------
 
-learner = LearningAlgorithms()
+# print(dir(LA))
+max_features = 10
+learner = ClassificationAlgorithms()
+
+selected_features, ordered_features, ordered_scores = learner.forward_selection(
+    max_features, X_train, y_train
+)
+
+"""Just in case if Kernel crashes we store values in veriables """
+selected_features = [
+    "pca_1",
+    "duration",
+    "acc_z_freq_0.0_Hz_ws_14",
+    "gyr_r_freq_0.0_Hz_ws_14",
+    "gyr_y_temp_std_ws_5",
+    "gyr_y_freq_1.429_Hz_ws_14",
+    "acc_z_freq_1.071_Hz_ws_14",
+    "gyr_r",
+    "acc_x_freq_2.5_Hz_ws_14",
+    "acc_z_freq_0.714_Hz_ws_14",
+]
+
+ordered_features = [
+    "pca_1",
+    "duration",
+    "acc_z_freq_0.0_Hz_ws_14",
+    "gyr_r_freq_0.0_Hz_ws_14",
+    "gyr_y_temp_std_ws_5",
+    "gyr_y_freq_1.429_Hz_ws_14",
+    "acc_z_freq_1.071_Hz_ws_14",
+    "gyr_r",
+    "acc_x_freq_2.5_Hz_ws_14",
+    "acc_z_freq_0.714_Hz_ws_14",
+]
+
+ordered_scores = [
+    0.8936651583710408,
+    0.9773755656108597,
+    0.997737556561086,
+    0.9996767937944409,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+]
+
+plt.figure(figsize=(10, 5))
+plt.plot(np.arange(1, max_features + 1, 1), ordered_scores)
+plt.xlabel("Number of features")
+plt.ylabel("Accuracy")
+plt.xticks(np.arange(1, max_features + 1, 1))
+plt.show()
 
 # --------------------------------------------------------------
 # Grid search for best hyperparameters and model selection
@@ -97,4 +153,3 @@ learner = LearningAlgorithms()
 # --------------------------------------------------------------
 # Try a simpler model with the selected features
 # --------------------------------------------------------------
-LAlgo = LearningAlgorithms()

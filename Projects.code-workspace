@@ -5,6 +5,6 @@
 		}
 	],
 	"settings": {
-		"python.defaultInterpreterPath": "/Users/abhijeetthombare/ab_lib/Projects/.venv/bin/python3"
+		# "python.defaultInterpreterPath": "/Users/abhijeetthombare/ab_lib/Projects/.venv/bin/python3"
 	}
 }
