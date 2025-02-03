@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import itertools
 from sklearn.metrics import accuracy_score, confusion_matrix
-from fitness_tracker.src.modeling.LearningAlgorithms import ClassificationAlgorithms
+from LearningAlgorithms import ClassificationAlgorithms
 
 
 # Plot settings
@@ -15,7 +15,7 @@ plt.rcParams["figure.dpi"] = 100
 plt.rcParams["lines.linewidth"] = 2
 
 
-df = pd.read_pickle("../../data/interim/03_data_features.pkl")
+# df = pd.read_pickle("../../data/interim/03_data_features.pkl")
 
 # --------------------------------------------------------------
 # Create a training and test set
