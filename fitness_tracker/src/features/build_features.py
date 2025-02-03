@@ -102,14 +102,15 @@ subset[["pca_1", "pca_2", "pca_3"]].plot()
 # --------------------------------------------------------------
 
 df_squared = df_pca.copy()
-acc_r = df_squared["acc_x"] ** 2 + df_squared["acc_x"] ** 2 + df_squared["acc_x"] ** 2
-gyr_r = df_squared["gyr_x"] ** 2 + df_squared["gyr_x"] ** 2 + df_squared["gyr_x"] ** 2
+
+acc_r = df_squared["acc_x"] ** 2 + df_squared["acc_y"] ** 2 + df_squared["acc_z"] ** 2
+gyr_r = df_squared["gyr_x"] ** 2 + df_squared["gyr_y"] ** 2 + df_squared["gyr_z"] ** 2
 
 df_squared["acc_r"] = np.sqrt(acc_r)
 df_squared["gyr_r"] = np.sqrt(gyr_r)
 
 subset = df_squared[df_squared["set"] == 14]
-subset[["acc_r", "gyr_r"]].plot()
+subset[["acc_r", "gyr_r"]].plot(subplots=True)
 
 df_squared
 
@@ -155,15 +156,6 @@ subset[["gyr_y", "gyr_y_temp_mean_ws_5", "gyr_y_temp_std_ws_5"]].plot()
 # Frequency features
 # --------------------------------------------------------------
 
-# --------------------------------------------------------------
-# re-writting freq feature code
-# --------------------------------------------------------------
-
-
-# --------------------------------------------------------------
-# re-writting freq feature code
-# --------------------------------------------------------------
-
 df_freq = df_temporal.copy().reset_index()
 FreqAbs = FourierTransformation()
 
@@ -194,7 +186,10 @@ for s in df_freq["set"].unique():
     subset = FreqAbs.abstract_frequency(subset, predictor_column, ws, fs)
     df_freq_list.append(subset)
 
-    df_freq = pd.concat(df_freq_list).set_index("epoch (ms)", drop=True)
+
+df_freq = pd.concat(df_freq_list)
+
+df_freq = pd.concat(df_freq_list).set_index("epoch (ms)", drop=True)
 
 # --------------------------------------------------------------
 # Dealing with overlapping windows
@@ -229,10 +224,6 @@ for k in k_values:
     cluster_labels = kmeans.fit_predict(subset)
     inertias.append(kmeans.inertia_)
 
-print("k_values:", k_values)
-print("inertias:", inertias)
-print(type(k_values), type(inertias))
-
 plt.figure(figsize=(10, 10))
 plt.plot(k_values, inertias)
 plt.xlabel("k")
@@ -255,6 +246,7 @@ ax.set_zlabel("Z-axis")
 plt.legend()
 plt.show()
 
+# with Label
 fig = plt.figure(figsize=(15, 15))
 ax = fig.add_subplot(projection="3d")
 for l in df_cluster["label"].unique():

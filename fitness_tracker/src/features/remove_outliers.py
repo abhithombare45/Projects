@@ -5,6 +5,10 @@ import math
 import scipy
 from sklearn.neighbors import LocalOutlierFactor  # pip install scikit-learn
 
+import warnings
+
+warnings.simplefilter(action="ignore", category=FutureWarning)
+
 # --------------------------------------------------------------
 # Load data
 # --------------------------------------------------------------
