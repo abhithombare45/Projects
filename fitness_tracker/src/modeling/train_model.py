@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import itertools
 from sklearn.metrics import accuracy_score, confusion_matrix
+
 from LearningAlgorithms import ClassificationAlgorithms
 
 
@@ -15,22 +16,58 @@ plt.rcParams["figure.dpi"] = 100
 plt.rcParams["lines.linewidth"] = 2
 
 
-# df = pd.read_pickle("../../data/interim/03_data_features.pkl")
+df = pd.read_pickle("../../data/interim/03_data_features.pkl")
 
 # --------------------------------------------------------------
 # Create a training and test set
 # --------------------------------------------------------------
 
+df_train = df.drop(["participant", "category", "set"], axis=1)
+
+X = df_train.drop("label", axis=1)
+y = df_train["label"]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+
+fig, ax = plt.subplots(figsize=(10, 5))
+df_train["label"].value_counts().plot(
+    kind="bar", ax=ax, color="lightblue", label="Total"
+)
+y_train.value_counts().plot(kind="bar", ax=ax, color="dodgerblue", label="Train")
+y_test.value_counts().plot(kind="bar", ax=ax, color="royalblue", label="Test")
+plt.legend()
+plt.show()
 
 # --------------------------------------------------------------
 # Split feature subsets
 # --------------------------------------------------------------
 
+basic_features = ["acc_x", "acc_y", "acc_z", "gyr_x", "gyr_y", "gyr_z"]
+square_features = ["acc_r", "gyr_r"]
+pca_features = ["pca1", "pca2", "pca3"]
+time_features = [f for f in df_train.columns if "_temp_" in f]
+freq_features = [f for f in df_train.columns if (("_freq" in f) or ("_pse" in f))]
+cluster_features = ["cluster"]
+
+print("Basic Features: ", len(basic_features))
+print("square Features: ", len(square_features))
+print("PCA Features: ", len(pca_features))
+print("Time Features: ", len(time_features))
+print("Frequency Features: ", len(freq_features))
+print("Cluster Features: ", len(cluster_features))
+
+feature_set_1 = list(set(basic_features))
+feature_set_2 = list(set(basic_features + square_features + pca_features))
+feature_set_3 = list(set(feature_set_2 + time_features))
+feature_set_4 = list(set(feature_set_3 + freq_features + cluster_features))
 
 # --------------------------------------------------------------
 # Perform forward feature selection using simple decision tree
 # --------------------------------------------------------------
 
+learner = LearningAlgorithms()
 
 # --------------------------------------------------------------
 # Grid search for best hyperparameters and model selection
@@ -60,3 +97,4 @@ plt.rcParams["lines.linewidth"] = 2
 # --------------------------------------------------------------
 # Try a simpler model with the selected features
 # --------------------------------------------------------------
+LAlgo = LearningAlgorithms()
