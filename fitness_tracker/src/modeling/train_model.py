@@ -33,12 +33,44 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.25, random_state=42, stratify=y
 )
 
+
+# # Plot 1
+# fig, ax = plt.subplots(figsize=(10, 5))
+# df_train["label"].value_counts().plot(
+#     kind="bar", ax=ax, color="lightblue", label="Total"
+# )
+# y_train.value_counts().plot(kind="bar", ax=ax, color="dodgerblue", label="Train")
+# y_test.value_counts().plot(kind="bar", ax=ax, color="royalblue", label="Test")
+# plt.legend()
+# plt.show()
+
+
+# Plot 2
 fig, ax = plt.subplots(figsize=(10, 5))
-df_train["label"].value_counts().plot(
-    kind="bar", ax=ax, color="lightblue", label="Total"
+bars_total = (
+    df_train["label"]
+    .value_counts()
+    .plot(kind="bar", ax=ax, color="lightblue", label="Total")
 )
-y_train.value_counts().plot(kind="bar", ax=ax, color="dodgerblue", label="Train")
-y_test.value_counts().plot(kind="bar", ax=ax, color="royalblue", label="Test")
+bars_train = y_train.value_counts().plot(
+    kind="bar", ax=ax, color="dodgerblue", label="Train"
+)
+bars_test = y_test.value_counts().plot(
+    kind="bar", ax=ax, color="royalblue", label="Test"
+)
+
+# Add text labels above bars
+for bar in bars_total.patches + bars_train.patches + bars_test.patches:
+    ax.text(
+        bar.get_x() + bar.get_width() / 2,
+        bar.get_height(),
+        int(bar.get_height()),
+        ha="center",
+        va="bottom",
+        fontsize=10,
+        color="black",
+    )
+
 plt.legend()
 plt.show()
 
@@ -238,6 +270,11 @@ for i, f in zip(range(len(possible_feature_sets)), feature_names):
     )
     score_df = pd.concat([score_df, new_scores])
 
+
+# --------------------------------------------------------------
+# Create a grouped bar plot to compare the results
+# --------------------------------------------------------------
+
 score_df.sort_values(by="accuracy", ascending=False)
 
 plt.figure(figsize=(10, 10))
@@ -249,8 +286,9 @@ plt.legend(loc="lower right")
 plt.show()
 
 # --------------------------------------------------------------
-# Create a grouped bar plot to compare the results
+# Select best model and evaluate results
 # --------------------------------------------------------------
+
 
 (
     class_train_y,
@@ -288,41 +326,59 @@ plt.xlabel("Predicted label")
 plt.grid(False)
 plt.show()
 
+
 # --------------------------------------------------------------
-# Select best model and evaluate results
+# Select train and test data based on participant
 # --------------------------------------------------------------
+
 
 participant_df = df.drop(["set", "category"], axis=1)
 
 X_train = participant_df[participant_df["participant"] != "A"].drop("label", axis=1)
-y_train = participant_df[participant_df["participant"] != "A"].drop("label", axis=1)
+y_train = participant_df[participant_df["participant"] != "A"]["label"]
 
 X_test = participant_df[participant_df["participant"] == "A"].drop("label", axis=1)
-y_test = participant_df[participant_df["participant"] == "A"].drop("label", axis=1)
+y_test = participant_df[participant_df["participant"] == "A"]["label"]
 
 X_train = X_train.drop("participant", axis=1)
 X_test = X_test.drop("participant", axis=1)
 
-fig, ax = plt.subplots(figsize=(10, 5))
-df_train["label"].value_counts().plot(
-    kind="bar", ax=ax, color="lightblue", label="Total"
-)
-y_train.value_counts().plot(kind="bar", ax=ax, color="dodgerblue", label="Train")
-y_test.value_counts().plot(kind="bar", ax=ax, color="royalblue", label="Test")
-plt.legend()
-plt.show()
+# # Plot 1
+# fig, ax = plt.subplots(figsize=(10, 5))
+# df_train["label"].value_counts().plot(kind="bar", ax=ax, color="lightblue", label="Total")
+# y_train.value_counts().plot(kind="bar", ax=ax, color="dodgerblue", label="Train")
+# y_test.value_counts().plot(kind="bar", ax=ax, color="royalblue", label="Test")
+# plt.legend()
+# plt.show()
 
+# Plot 2
 fig, ax = plt.subplots(figsize=(10, 5))
-df_train["label"].value_counts().plot(
-    kind="bar", ax=ax, color="lightblue", label="Total"
+bars_total = (
+    df_train["label"]
+    .value_counts()
+    .plot(kind="bar", ax=ax, color="lightblue", label="Total")
 )
-y_train.value_counts().plot(kind="bar", ax=ax, color="dodgerblue", label="Train")
-y_test.value_counts().plot(kind="bar", ax=ax, color="royalblue", label="Test")
+bars_train = y_train.value_counts().plot(
+    kind="bar", ax=ax, color="dodgerblue", label="Train"
+)
+bars_test = y_test.value_counts().plot(
+    kind="bar", ax=ax, color="royalblue", label="Test"
+)
+
+# Add text labels above bars
+for bar in bars_total.patches + bars_train.patches + bars_test.patches:
+    ax.text(
+        bar.get_x() + bar.get_width() / 2,
+        bar.get_height(),
+        int(bar.get_height()),
+        ha="center",
+        va="bottom",
+        fontsize=10,
+        color="black",
+    )
+
 plt.legend()
 plt.show()
-# --------------------------------------------------------------
-# Select train and test data based on participant
-# --------------------------------------------------------------
 
 
 # --------------------------------------------------------------
@@ -330,6 +386,87 @@ plt.show()
 # --------------------------------------------------------------
 
 
+(
+    class_train_y,
+    class_test_y,
+    class_train_prob_y,
+    class_test_prob_y,
+) = learner.random_forest(
+    X_train[feature_set_4], y_train, X_test[feature_set_4], gridsearch=True
+)
+
+accuracy = accuracy_score(y_test, class_test_y)
+
+classes = class_test_prob_y.columns
+cm = CM = confusion_matrix(y_test, class_test_y, labels=classes)
+
+# create confusion matrix for cm
+plt.figure(figsize=(10, 10))
+plt.imshow(cm, interpolation="nearest", cmap=plt.cm.Blues)
+plt.title("Confusion matrix")
+plt.colorbar()
+tick_marks = np.arange(len(classes))
+plt.xticks(tick_marks, classes, rotation=45)
+plt.yticks(tick_marks, classes)
+thresh = cm.max() / 2.0
+for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
+    plt.text(
+        j,
+        i,
+        format(cm[i, j]),
+        horizontalalignment="center",
+        color="white" if cm[i, j] > thresh else "black",
+    )
+plt.ylabel("True label")
+plt.xlabel("Predicted label")
+plt.grid(False)
+plt.show()
+
+
 # --------------------------------------------------------------
 # Try a simpler model with the selected features
 # --------------------------------------------------------------
+
+(
+    class_train_y,
+    class_test_y,
+    class_train_prob_y,
+    class_test_prob_y,
+) = learner.random_forest(
+    X_train[feature_set_4], y_train, X_test[feature_set_4], gridsearch=False
+)
+
+accuracy = accuracy_score(y_test, class_test_y)
+
+# With Nural Network we got poor accuracy(88.xx%)
+# But With Random Forest we got good/enough accuracy(98.xx%)
+# So reverting values from below lines to Random_forest and feature_set_4
+
+# ) = learner.feedforward_neural_network(
+#     X_train[selected_features], y_train, X_test[selected_features], gridsearch=False
+# )
+
+classes = class_test_prob_y.columns
+cm = CM = confusion_matrix(y_test, class_test_y, labels=classes)
+
+# create confusion matrix for cm
+plt.figure(figsize=(10, 10))
+plt.imshow(cm, interpolation="nearest", cmap=plt.cm.Blues)
+plt.title("Confusion matrix")
+plt.colorbar()
+tick_marks = np.arange(len(classes))
+plt.xticks(tick_marks, classes, rotation=45)
+plt.yticks(tick_marks, classes)
+thresh = cm.max() / 2.0
+for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
+    plt.text(
+        j,
+        i,
+        format(cm[i, j]),
+        horizontalalignment="center",
+        color="white" if cm[i, j] > thresh else "black",
+    )
+plt.ylabel("True label")
+plt.xlabel("Predicted label")
+plt.grid(False)
+plt.show()
