@@ -7,8 +7,8 @@ import itertools
 from sklearn.metrics import accuracy_score, confusion_matrix
 
 # import LearningAlgorithms as LA
-# import sys
-# sys.path.append("/Users/abhijeetthombare/ab_lib/Projects/fitness_tracker/src/modeling/")
+import sys
+sys.path.append("/Users/abhijeetthombare/ab_lib/Projects/fitness_tracker/src/modeling/")
 from LearningAlgorithms import ClassificationAlgorithms
 
 # Plot settings
