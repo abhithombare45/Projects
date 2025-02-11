@@ -140,14 +140,14 @@ for s in df["set"].unique():
     cutoff = 0.4
 
     if subset["label"].iloc[0] == "squat":
-        cutoff = 0.35
+        cutoff = 0.38
 
     if subset["label"].iloc[0] == "row":
         cutoff = 0.65
         column = "gyr_x"
 
     if subset["label"].iloc[0] == "ohp":
-        cutoff = 0.44
+        cutoff = 0.45
 
     reps = count_reps(subset, cutoff=cutoff, column=column)
 
