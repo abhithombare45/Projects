@@ -13,7 +13,7 @@ df = pd.read_csv("/Users/abhijeetthombare/ab_lib/Projects/EdX_DS_stat/Advertisin
 df.head()
 # Get a subset of the data i.e. rows 5 to 13
 # Use the TV column as the predictor
-x_true = df.TV.iloc[5:13]
+x_true = df.TV.iloc[5:13] 
 
 # Use the Sales column as the response
 y_true = df.Sales.iloc[5:13]
