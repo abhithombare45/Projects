@@ -1,0 +1,27 @@
+# cat > sentiment_dashboard/.gitignore << 'EOF'
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.swp
+.pytest_cache/
+
+# Virtual Environment
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+notebooks/*.ipynb
+
+# API Keys
+.env
+*.secret
+
+# OS
+.DS_Store
+Thumbs.db
+EOF
+
+# PRAW Configuration
+praw.ini
+
