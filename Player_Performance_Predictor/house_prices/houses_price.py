@@ -32,15 +32,15 @@ print()
 # b = y-intercept (base price when size = 0)
 
 # Let's calculate these manually using the normal equation
-# For simple linear regression:
-# m = (n*Σ(xy) - Σ(x)*Σ(y)) / (n*Σ(x²) - (Σ(x))²)
-# b = (Σ(y) - m*Σ(x)) / n
+""" For simple linear regression: 
+    m = (n*Σ(xy) - Σ(x)*Σ(y)) / (n*Σ(x²) - (Σ(x))²)
+    b = (Σ(y) - m*Σ(x)) / n """
 
 n = len(house_sizes)
 sum_x = np.sum(house_sizes)
 sum_y = np.sum(house_prices)
 sum_xy = np.sum(house_sizes * house_prices)
-sum_x_squared = np.sum(house_sizes**2)
+sum_x_squared = np.sum(house_sizes**2)  # Calculate the sum of squares of house_sizes
 
 # Calculate slope (m) and intercept (b)
 m = (n * sum_xy - sum_x * sum_y) / (n * sum_x_squared - sum_x**2)
@@ -148,6 +148,7 @@ y_custom = custom_model.predict(x_plot)  # Our custom model
 plt.figure(figsize=(12, 8))
 
 # Original data points
+# Manual
 plt.subplot(2, 2, 1)
 plt.scatter(
     house_sizes, house_prices, color="red", s=100, alpha=0.7, label="Actual Data"
@@ -161,6 +162,7 @@ plt.title("Manual Calculation Results")
 plt.legend()
 plt.grid(True, alpha=0.3)
 
+# Custom
 plt.subplot(2, 2, 2)
 plt.scatter(
     house_sizes, house_prices, color="red", s=100, alpha=0.7, label="Actual Data"
