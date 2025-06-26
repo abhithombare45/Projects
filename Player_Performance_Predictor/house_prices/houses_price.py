@@ -6,6 +6,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
 import pandas as pd
 
+
 # ===============================
 # PART 1: UNDERSTANDING THE MATH
 # ===============================
