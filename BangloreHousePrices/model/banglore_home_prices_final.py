@@ -135,7 +135,7 @@ def remove_bhk_outliers(df):
     for location, location_df in df.groupby('location'):
         bhk_stats = {}
         for bhk, bhk_df in location_df.groupby('BHK'):
-            bhk_stats[BHK] = {
+            bhk_stats[bhk] = {
                 'mean' : np.mean(bhk_df.price_per_sqft),
                 'std': np.std(bhk_df.price_per_sqft),
                 'count': bhk_df.shape[0]
@@ -150,3 +150,26 @@ df4 = df
 
 df = remove_bhk_outliers(df)
 df 
+
+
+plot_scatter_chart(df, 'Hebbal')
+
+import matplotlib
+matplotlib.rcParams["figure.figsize"] = (20,10)
+plt.hist(df.price_per_sqft,rwidth=0.8)
+plt.xlabel("Price Per Square Feet" ) 
+plt.ylabel ("Count")
+
+
+plt.hist(df.bath, rwidth=0.8)
+plt.xlabel("Number of Bathroms")
+plt.ylabel("Count")
+
+
+df[df.bath>df.BHK+2]
+df = df[df.bath < df.BHK+2] #bath should be smaller that (bhk+2)
+
+df5 = df
+
+df = df.drop(['size', 'price_per_sqft'], axis = 'columns')
+df.head()
