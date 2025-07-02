@@ -87,6 +87,66 @@ len(location_stat[location_stat<=10])
 location_stat_less_than_10 = location_stat[location_stat<=10]
 
 len(df.location.unique())
-#1293 
+# 1293 
+
+df.location = df.location.apply(lambda x: 'other' if x in location_stat_less_than_10 else x)
+len(df.location.unique())
+# 242
 
 
+df[df.total_sqft/df.BHK<300]
+
+df.shape
+df = df[~(df.total_sqft/df.BHK<300)]
+
+df.price_per_sqft.describe()
+
+def remove_pps_outliers(df):
+    df_out = pd.DataFrame()
+    for key, subdf in df.groupby('location'):
+        m = np.mean(subdf.price_per_sqft)
+        st = np.std(subdf.price_per_sqft)
+        reduced_df = subdf[(subdf.price_per_sqft>(m-st)) & (subdf.price_per_sqft<=(m+st))]
+        df_out = pd.concat([df_out, reduced_df], ignore_index=True)
+    return df_out   
+
+df3 = df
+df = remove_pps_outliers(df)
+
+
+def plot_scatter_chart(df, location):
+    bhk2 = df[(df.location==location) & (df.BHK==2)]
+    bhk3 = df[(df.location==location) & (df.BHK==3)]
+    matplotlib.rcParams['figure.figsize'] = (15,10)
+    plt.scatter(bhk2.total_sqft,bhk2.price, color='blue', label='2 BHK', s=50)
+    plt.scatter(bhk3.total_sqft,bhk3.price,marker='+', color= 'green', label='3 BHK', s=50)
+    plt.xlabel("Total Square Feet Area") 
+    plt.ylabel("Price")
+    plt. title (location)
+    plt.legend()
+
+plot_scatter_chart(df,"Rajaji Nagar")
+plot_scatter_chart(df,"Hebbal")
+
+
+
+def remove_bhk_outliers(df):
+    exclude_indices = np.array([])
+    for location, location_df in df.groupby('location'):
+        bhk_stats = {}
+        for bhk, bhk_df in location_df.groupby('BHK'):
+            bhk_stats[BHK] = {
+                'mean' : np.mean(bhk_df.price_per_sqft),
+                'std': np.std(bhk_df.price_per_sqft),
+                'count': bhk_df.shape[0]
+            }
+        for bhk, bhk_df in location_df.groupby('BHK'):
+            stats = bhk_stats.get(bhk-1)
+            if stats and stats['count']>5:
+                exclude_indices = np.append(exclude_indices, bhk_df[bhk_df.price_per_sqft<(stats['mean'])].index.values)
+    return df.drop(exclude_indices,axis='index')
+
+df4 = df
+
+df = remove_bhk_outliers(df)
+df 
