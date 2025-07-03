@@ -173,3 +173,10 @@ df5 = df
 
 df = df.drop(['size', 'price_per_sqft'], axis = 'columns')
 df.head()
+
+dummies = pd.get_dummies(df.location, dtype = int)
+df6 = df
+dummies.head(50)
+
+df = pd.concat([df,dummies.drop('other', axis='columns')], axis='columns').head(50)
+
