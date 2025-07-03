@@ -169,7 +169,7 @@ plt.ylabel("Count")
 df[df.bath>df.BHK+2]
 df = df[df.bath < df.BHK+2] #bath should be smaller that (bhk+2)
 
-df5 = df
+ df5 = df 
 
 df = df.drop(['size', 'price_per_sqft'], axis = 'columns')
 df.head()
@@ -178,5 +178,42 @@ dummies = pd.get_dummies(df.location, dtype = int)
 df6 = df
 dummies.head(50)
 
-df = pd.concat([df,dummies.drop('other', axis='columns')], axis='columns').head(50)
+df = pd.concat([df,dummies.drop('other', axis='columns')], axis='columns')
+
+df = df.drop('location', axis='columns')
+df.shape
+
+# now lets x be independent variable as we are predicting prices of House in Banglore.
+x = df.drop('price', axis = 'columns')
+x.head()
+
+# y is nothing but Prices of houses in Banglore, Fro Training Dateset.
+# which we are predicting
+
+y = df.price
+y.head()
+
+from sklearn.model_selection import train_test_split
+x_train, x_test, y_train, y_test = train_test_split(x,y, test_size=0.2, random_state=10)
+
+from sklearn.linear_model import LinearRegression 
+lr = LinearRegression()
+lr.fit(x_train, y_train)
+lr.score(x_test, y_test)
+
+from sklearn.model_selection import ShuffleSplit
+from sklearn.model_selection import cross_val_score
+
+cv = ShuffleSplit(n_splits=5, test_size=0.2, random_state=0)
+
+cross_val_score(LinearRegression(), x, y, cv=cv)
+
+from sklearn.model_selection import GridSearchCV
+from sklearn.linear_model import Lasso
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.tree import DecisionTreeClassifier
+
+
+
+
 
