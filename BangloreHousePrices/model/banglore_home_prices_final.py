@@ -74,6 +74,7 @@ df.head()
 
 #   df.location.unique().  # list of unique locations
 len(df.location.unique())
+# 1304
 
 df.location = df.location.apply(lambda x: x.strip())
 
@@ -82,6 +83,7 @@ location_stat.head(50)
 
     location_stat[location_stat<=10]
 len(location_stat[location_stat<=10])
+# 1052
 
 
 location_stat_less_than_10 = location_stat[location_stat<=10]
@@ -93,10 +95,11 @@ df.location = df.location.apply(lambda x: 'other' if x in location_stat_less_tha
 len(df.location.unique())
 # 242
 
-
+df.head()
 df[df.total_sqft/df.BHK<300]
 
 df.shape
+df02 = df
 df = df[~(df.total_sqft/df.BHK<300)]
 
 df.price_per_sqft.describe()
@@ -150,6 +153,7 @@ df4 = df
 
 df = remove_bhk_outliers(df)
 df 
+df.shape
 
 
 plot_scatter_chart(df, 'Hebbal')
@@ -167,9 +171,10 @@ plt.ylabel("Count")
 
 
 df[df.bath>df.BHK+2]
+df5 = df 
+
 df = df[df.bath < df.BHK+2] #bath should be smaller that (bhk+2)
 
- df5 = df 
 
 df = df.drop(['size', 'price_per_sqft'], axis = 'columns')
 df.head()
@@ -192,6 +197,7 @@ x.head()
 
 y = df.price
 y.head()
+len(y)
 
 from sklearn.model_selection import train_test_split
 x_train, x_test, y_train, y_test = train_test_split(x,y, test_size=0.2, random_state=10)
@@ -200,6 +206,8 @@ from sklearn.linear_model import LinearRegression
 lr = LinearRegression()
 lr.fit(x_train, y_train)
 lr.score(x_test, y_test)
+# we get result with 84% ~0.8452277697874324
+
 
 from sklearn.model_selection import ShuffleSplit
 from sklearn.model_selection import cross_val_score
@@ -211,7 +219,78 @@ cross_val_score(LinearRegression(), x, y, cv=cv)
 from sklearn.model_selection import GridSearchCV
 from sklearn.linear_model import Lasso
 from sklearn.tree import DecisionTreeRegressor
-from sklearn.tree import DecisionTreeClassifier
+# from sklearn.tree import DecisionTreeClassifier
+
+def find_best_model_using_gridsearchcv(x,y):
+    algos = {
+        'linear_regression' : {
+            'model': LinearRegression(),
+            'params': {
+                'fit_intercept': [True, False]
+            }
+        },
+        'lasso': {
+            'model': Lasso(),
+            'params': {
+                'alpha': [1,2],
+                'selection': ['random', 'cyclic']
+                }
+        },
+        'decision_tree': {
+            'model': DecisionTreeRegressor(),
+            'params': {
+                'criterion' : ['mse', 'friedman_mse'],
+                'splitter'  : ['best', 'random']
+                }
+        }
+    }
+
+    scores = []
+    cv = ShuffleSplit(n_splits=5, test_size=0.2, random_state=0)
+    for algo_name, config in algos.items():
+        gs = GridSearchCV(config['model'], config['params'], cv = cv, return_train_score=False)
+        gs.fit(x,y)
+        scores.append({
+            'model' : algo_name,
+            'best_score' : gs.best_score_,
+            'best_params' : gs.best_params_
+        })
+    return pd.DataFrame(scores, columns=['model', 'best_score', 'best_params'])
+
+
+find_best_model_using_gridsearchcv(x,y)
+	# linear_regression	0.819001 --- Winner Best Score
+	# lasso	            0.687429
+	# decision_tree	    0.714689
+
+x.columns
+x.head()
+    # np.where(x.column==location)[0][0]
+np.where(x.columns=='2nd Phase Judicial Layout')[0][0]
+int(np.where(x.columns == '6th Phase JP Nagar')[0][0])  
+
+
+def predict_price(location,sqft,bath,BHK):
+    loc_index = int(np.where(x.columns == location)[0][0])
+
+    X = np.zeros(len(x.columns))
+    X[0] = sqft
+    X[1] = bath
+    X[2] = BHK
+    if loc_index >= 0:
+        X[loc_index] = 1
+    else:
+        print(f"Warning: location '{location}' not found in training data.")
+    return float(lr.predict([X])[0])
+
+
+predict_price('1st Phase JP Nagar', 1000, 2, 2)
+int(predict_price('1st Phase JP Nagar', 1000, 3, 3))
+int(predict_price('1st Phase JP Nagar', 1000, 3, 2))
+int(predict_price('1st Phase JP Nagar', 1000, 2, 3))
+
+predict_price('Indira Nagar', 1000, 2, 2)
+predict_price('Indira Nagar', 1100, 2, 3)
 
 
 
