@@ -290,7 +290,21 @@ int(predict_price('1st Phase JP Nagar', 1000, 3, 2))
 int(predict_price('1st Phase JP Nagar', 1000, 2, 3))
 
 predict_price('Indira Nagar', 1000, 2, 2)
+predict_price('Indira Nagar', 1000, 2, 3)
 predict_price('Indira Nagar', 1100, 2, 3)
+
+
+import pickle
+with open ('./banglore_home_prices_model.picke','wb') as f:
+    pickle.dump(lr,f)
+
+
+import json
+columns = {
+    'data_columns' : [col.lower() for col in x.columns]
+}
+with open("./columns.json","w") as f:
+    f.write(json.dumps(columns))
 
 
 
