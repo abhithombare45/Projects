@@ -23,11 +23,10 @@ def get_estimated_price(location, sqft, bhk, bath):
     x[2] = bhk
     if loc_index >= 0:
         x[loc_index] = 1
-    # else:
-    #     print(f"Warning: location '{location}' not found in training data.")
-    return round(float(__model.predict([x])[0]), 2)
+    # return round(float(__model.predict([x])[0]), 2)    # Originally it was like this
+    return round(__model.predict([x])[0], 2)
 
-    return __model.predict([x])
+    # return __model.predict([x])
 
 
 def load_saved_artifacts():
@@ -42,8 +41,9 @@ def load_saved_artifacts():
         __data_columns = json.load(f)["data_columns"]
         __locations = __data_columns[3:]
 
+    global __model
     with open(
-        "/Users/abhijeetthombare/ab_lib/Projects/BangloreHousePrices/server/artifacts/banglore_home_prices_model.picke",
+        "/Users/abhijeetthombare/ab_lib/Projects/BangloreHousePrices/server/artifacts/banglore_home_prices_model.pickle",
         "rb",
     ) as f:
         __model = pickle.load(f)
@@ -54,5 +54,7 @@ if __name__ == "__main__":
     load_saved_artifacts()
     print(get_location_names())
 
-    print(get_estimated_price("1st Phase JP Nagar"), 1000, 3, 3)
-    print(get_estimated_price("1st Phase JP Nagar"), 1000, 2, 2)
+    print(get_estimated_price("1st Phase JP Nagar", 1000, 3, 3))
+    print(get_estimated_price("1st Phase JP Nagar", 1000, 3, 2))
+    print(get_estimated_price("Kalhalli", 1000, 2, 2))  # other location
+    print(get_estimated_price("Ejipura", 1000, 2, 2))  # other location

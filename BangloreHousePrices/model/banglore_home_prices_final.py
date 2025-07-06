@@ -295,7 +295,7 @@ predict_price('Indira Nagar', 1100, 2, 3)
 
 
 import pickle
-with open ('./banglore_home_prices_model.picke','wb') as f:
+with open ('./banglore_home_prices_model.pickle','wb') as f:
     pickle.dump(lr,f)
 
 
