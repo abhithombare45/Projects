@@ -4,8 +4,10 @@
 This repository provides all the code to process, visualize, and classify accelerometer and gyroscope data obtained from [Mbientlab's WristBand Sensor Research Kit](https://mbientlab.com/). The data was collected during gym workouts where participants were performing various barbell exercises.
 
 #### Exercises
-![Barbell exercise examples](PythonCode/images/barbell_exercises.png)
-![Barbell exercise graphs](PythonCode/images/graphs.png)
+![Screenshot](image/barbell_exercises.png)
+![Screenshot](image/graphs.png)
+<!--![Barbell exercise examples](PythonCode/images/barbell_exercises.png)
+![Barbell exercise graphs](PythonCode/images/graphs.png) -->
 
 #### Goals
 * Classify barbell exercises
