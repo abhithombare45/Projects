@@ -1,7 +1,7 @@
 # Tracking Barbell Exercises
 *Mini Master Project | Abhijeet Thombare | Pune, Maharashtra, India*
 
-This repository provides all the code to process, visualize, and classify accelerometer and gyroscope data obtained from [Mbientlab's WristBand Sensor Research Kit](https://mbientlab.com/). The data was collected during gym workouts where participants were performing various barbell exercises.
+This repository provides all the code to process, visualize, and classify accelerometer and gyroscope data obtained from fitbit smart band. The data was collected during gym workouts where participants were performing various barbell exercises.
 
 #### Exercises
 ![Barbell exercise examples](images/barbell_exercises.png)
