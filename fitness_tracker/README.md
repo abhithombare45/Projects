@@ -6,8 +6,6 @@ This repository provides all the code to process, visualize, and classify accele
 #### Exercises
 ![Barbell exercise examples](images/barbell_exercises.png)
 ![Barbell exercise graphs](images/graphs.png)
-<!--![Barbell exercise examples](PythonCode/images/barbell_exercises.png)
-![Barbell exercise graphs](PythonCode/images/graphs.png) -->
 
 #### Goals
 * Classify barbell exercises
