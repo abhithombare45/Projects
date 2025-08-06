@@ -3,23 +3,23 @@
 <p align="right"> abhithombare45 </p>
 This repository provides all the code to process, visualize, and classify accelerometer and gyroscope data obtained from fitbit smart band. The data was collected during gym workouts where participants were performing various barbell exercises.
 
-#### Exercises 🏋️‍♂️
+#### 🏋️‍♂️ Exercises 
 ![Barbell exercise examples](images/barbell_exercises.png)
 ![Barbell exercise graphs](images/graphs.png)
 
-#### Goals 📌
+#### 📌 Goals 
 * Classify barbell exercises
 * Count repetitions
 * Detect improper form 
 
-#### Installation 🧪 
+#### 🧬 Installation 
 Create and activate an anaconda environment and install all package versions using `conda install --name <EnvironmentName> --file conda_requirements.txt`. Install non-conda packages using pip: `pip install -r pip_requirements.txt`.
 
-#### References 🚀 
+#### 🚀 References  
 The original code is associated with the book titled "*Machine Learning for the Quantified Self: On the Art of Learning from Sensory Data*"
 authored by Mark Hoogendoorn and Burkhardt Funk and published by Springer in 2017. The website of the book can be found on [ml4qs.org](https://ml4qs.org/).
 
-#### Project Structure 📁
+#### 📁 Project Structure 
 
 ```
 ├── LICENSE
@@ -44,10 +44,10 @@ authored by Mark Hoogendoorn and Burkhardt Funk and published by Springer in 201
 
 ###  Technologies Used
 
-####  Hardware 🧰
+####  🧰 Hardware 
   + Meta Motion Sensor (Wrist-Worn): Captures accelerometer and gyroscope data.
 
-####  Software 🧠
+####  🧠 Software 
 
   - Programming Language: Python
   - Libraries:
@@ -60,7 +60,7 @@ authored by Mark Hoogendoorn and Burkhardt Funk and published by Springer in 201
 
 ##  🟢 How It Works 
 
-####  1. Data Collection 
+####  1. Data Collection 📡
   - The dataset is collected using Meta Motion sensors worn on the wrist, mimicking the placement of a smartwatch.
   - The sensors capture accelerometer (measuring acceleration along X, Y, Z axes) and gyroscope (measuring angular velocity) data during strength training exercises.
   - Five foundational barbell exercises are recorded:
@@ -98,13 +98,14 @@ authored by Mark Hoogendoorn and Burkhardt Funk and published by Springer in 201
   -  Real-Time Applications: Implement real-time tracking and feedback via smartwatch SDKs.
   -  Enhanced Form Detection: Expand improper form detection to include more exercises and detailed analysis.
 
-#### [x] Acknowledgments 🤝💪
+#### 🤝 Acknowledgments 
 This project is inspired by the research conducted by Dave Ebbelaar. His paper, "Exploring the Possibilities of Context-Aware Applications for Strength Training", provided the foundation for the methodologies and approaches used in this project.
 
 
 > Project: Tracking Barbell Exercises using ML on Sensor Data [ Master Project | Abhijeet Thombare | IIT Guwahati Feb 2025 ]  
 > Built a fitness tracker model using time-series sensor data to classify different barbell exercises. Includes preprocessing, feature extraction, and supervised learning models.  
 
-![Build](https://img.shields.io/badge/build-passing-brightgreen)
-![License](https://img.shields.io/badge/license-MIT-blue)
+![Build](https://img.shields.io/badge/build-abhithombare45-orange)
+![Status](https://img.shields.io/badge/Status-COMPLETED-green)
+![License](https://img.shields.io/badge/license-IITG-blue)
 <p align="right">— Abhijeet Thombare  </p>
