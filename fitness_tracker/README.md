@@ -1,6 +1,8 @@
 # 🟢 Tracking Barbell Exercises
 *Master Project | Abhijeet Thombare | IIT, Guwahati- DS AI, India*
-<p align="right"> abhithombare45 </p>
+<div align="right">
+  <img src="https://img.shields.io/badge/abhithombare45-black" />
+</div>
 This repository provides all the code to process, visualize, and classify accelerometer and gyroscope data obtained from fitbit smart band. The data was collected during gym workouts where participants were performing various barbell exercises.
 
 #### 🏋️‍♂️ Exercises 
