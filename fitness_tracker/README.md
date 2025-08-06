@@ -25,4 +25,5 @@ authored by Mark Hoogendoorn and Burkhardt Funk and published by Springer in 201
 > Built a fitness tracker model using time-series sensor data to classify different barbell exercises. Includes preprocessing, feature extraction, and supervised learning models.  
 
 
-<p align="right">— Abhijeet Thombare [ abhithombare45 ] </p>
+<p align="right">— Abhijeet Thombare  </p>
+<p align="right">— abhithombare45 </p>
