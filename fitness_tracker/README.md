@@ -19,7 +19,7 @@ Create and activate an anaconda environment and install all package versions usi
 The original code is associated with the book titled "*Machine Learning for the Quantified Self: On the Art of Learning from Sensory Data*"
 authored by Mark Hoogendoorn and Burkhardt Funk and published by Springer in 2017. The website of the book can be found on [ml4qs.org](https://ml4qs.org/).
 
-#### Project Structure `
+#### Project Structure ```
 ├── LICENSE
 ├── README.md         # Project overview and usage guide
 ├── data              # Data storage directory
@@ -38,7 +38,7 @@ authored by Mark Hoogendoorn and Burkhardt Funk and published by Springer in 201
 │   ├── models        # Model training and evaluation scripts
 │   └── visualization # Scripts for data visualization
 └── requirements.txt  # Dependencies for project setup
-`
+```
 #### Acknowledgments
 This project is inspired by the research conducted by Dave Ebbelaar. His paper, "Exploring the Possibilities of Context-Aware Applications for Strength Training", provided the foundation for the methodologies and approaches used in this project.
 
