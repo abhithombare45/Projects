@@ -1,5 +1,5 @@
 # Tracking Barbell Exercises
-*Mini Master Project | Abhijeet Thombare | Pune, Maharashtra, India*
+*Master Project | Abhijeet Thombare | Pune, Maharashtra, India*
 
 This repository provides all the code to process, visualize, and classify accelerometer and gyroscope data obtained from fitbit smart band. The data was collected during gym workouts where participants were performing various barbell exercises.
 
@@ -21,5 +21,7 @@ authored by Mark Hoogendoorn and Burkhardt Funk and published by Springer in 201
 
 
 
-> Hoogendoorn, M. and Funk, B., Machine Learning for the Quantified Self - On the Art of Learning from Sensory Data, Springer, 2017.
+> Project: Tracking Barbell Exercises using ML on Sensor Data [ Master Project | Abhijeet Thombare | IIT Guwahati Feb 2025 ]  
+> Built a fitness tracker model using time-series sensor data to classify different barbell exercises. Includes preprocessing, feature extraction, and supervised learning models.  
+
 
